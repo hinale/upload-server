@@ -1,3 +1,4 @@
+import { uploadImage } from '@/app/functions/upload-image'
 import { db } from '@/infra/db'
 import { schema } from '@/infra/db/schemas'
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
@@ -25,14 +26,22 @@ export const uploadImageRoute: FastifyPluginAsyncZod = async server => {
         },
       })
 
-      // * Inseerção no banco
+      // * Inserção no banco de dados com drizzle
       // await db.insert(schema.uploads).values({
       //   name: 'teste.jpg',
       //   remoteKey: 'teste.jpg',
       //   remoteURL: 'http://teste.com',
       // })
 
-      console.log(uploadFile)
+      if (!uploadFile) {
+        return reply.status(400).send({ message: 'File is required' })
+      }
+
+      await uploadImage({
+        fileName: uploadFile.filename,
+        contentType: uploadFile.mimetype,
+        contentStream: uploadFile.file,
+      })
 
       return reply.status(201).send({ uploadId: 'teste' })
     }
