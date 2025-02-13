@@ -8,8 +8,8 @@ import {
   serializerCompiler,
   validatorCompiler,
 } from 'fastify-type-provider-zod'
-import { transformSwaggerSchema } from './roots/transform-swagger-schema'
-import { uploadImageRoute } from './roots/upload-image'
+import { uploadImageRoute } from './routes/upload-image'
+import { transformSwaggerSchema } from './transform-swagger-schema'
 
 const server = fastify()
 
