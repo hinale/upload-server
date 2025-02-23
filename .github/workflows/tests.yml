@@ -29,14 +29,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install Node.js
+      - name: Install Node.js and NPM
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: "npm"
 
+      - name: Verify NPM version
+        run: npm -v
+
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Run E2E Tests
-      - run: npm run test
+        run: npm run test
